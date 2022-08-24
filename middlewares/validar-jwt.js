@@ -5,19 +5,20 @@ const validarJWT = (req, res = response, next) => {
     
     const token = req.header('x-token');
 
-    if(!token){
-        return res.json({
-            ok: true,
-            msg: 'Renew',
-            token
-        });
-    }
+    // if(!token){
+    //     return res.json({
+    //         ok: false,
+    //         msg: 'Renew',
+    //         token
+    //     });
+    // }
 
     try {
 
-        const {uid, name} =jwt.verify( token, process.env.SECRETE_JWT_SEED );
+        const {uid, name, email} =jwt.verify( token, process.env.SECRETE_JWT_SEED );
         req.uid = uid;
         req.name = name;
+        req.email = email;
 
     }catch(error){
         return res.status(401).json({
